@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuela Fashion Store</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff0000', // Red
+                        secondary: '#0000ff', // Blue
+                        light: '#ffffff', // White
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .page-transition {
+            transition: all 0.3s ease;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+    <!-- Dark Mode Detection -->
+    <script>
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-2">
+            <div class="flex flex-wrap items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="flex items-center">
+                    <span class="text-2xl font-bold text-primary">Manuella Fashion<span class="text-secondary">Store</span></span>
+                </a>
+
+                <!-- Search Bar (Medium and Large Screens) -->
+                <div class="hidden md:flex flex-grow max-w-md mx-4">
+                    <div class="relative w-full">
+                        <input type="text" id="desktop-search" placeholder="Pesquisar produtos..." 
+                            class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
+                            bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <div class="absolute left-3 top-2.5 text-gray-400">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="flex items-center">
+                    <a href="#" class="px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-home"></i>
+                        <span class="hidden md:inline ml-1">Início</span>
+                    </a>
+                    <a href="#categorias" class="px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-th-large"></i>
+                        <span class="hidden md:inline ml-1">Categorias</span>
+                    </a>
+                    <a href="#carrinho" class="px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="hidden md:inline ml-1">Carrinho</span>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                    </a>
+                    <a href="#sobre" class="px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="hidden md:inline ml-1">Sobre</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Search Bar (Mobile) -->
+            <div class="mt-2 md:hidden">
+                <div class="relative">
+                    <input type="text" id="mobile-search" placeholder="Pesquisar produtos..." 
+                        class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
+                        bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                    <div class="absolute left-3 top-2.5 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Page Container -->
+        <div id="page-container" class="page-transition">
+            <!-- Home Page -->
+            <section id="home-page" class="page fade-in">
+                <!-- Banner -->
+                <div class="relative bg-gradient-to-r from-primary to-secondary rounded-xl overflow-hidden mb-8">
+                    <div class="absolute inset-0 bg-black opacity-30"></div>
+                    <div class="relative py-16 px-8 text-white">
+                        <h1 class="text-3xl md:text-5xl font-bold mb-4">Encomenda fácil - Quelimane e Milange</h1>
+                        <p class="text-lg md:text-xl mb-6">Encomendar artigos de moda em Quelimane e Milange nunca foi tão  fácil.</p>
+                        <a href="#categorias" class="bg-white text-primary px-6 py-2 rounded-lg font-bold hover:bg-gray-100 transition">
+                            Ver agora
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Category Highlights -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold mb-6 pb-2 border-b dark:border-gray-700">Categorias</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <a href="#categorias/camisas" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+                            <div class="h-32 md:h-40 bg-[url('https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg')] bg-cover bg-center"></div>
+                            <div class="p-4">
+                                <h3 class="font-bold">Camisas</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 450 MZN</p>
+                            </div>
+                        </a>
+                        <a href="#categorias/calcados" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+                            <div class="h-32 md:h-40 bg-[url('IMG-20250530-WA0089.jpg')] bg-cover bg-center"></div>
+                            <div class="p-4">
+                                <h3 class="font-bold">Calçados</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 1000 MZN</p>
+                            </div>
+                        </a>
+                        <a href="#categorias/calcas" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+                            <div class="h-32 md:h-40 bg-[url('https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg')] bg-cover bg-center"></div>
+                            <div class="p-4">
+                                <h3 class="font-bold">Calças</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 650 MZN</p>
+                            </div>
+                        </a>
+                        <a href="#categorias/vestidos" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+                            <div class="h-32 md:h-40 bg-[url('IMG-20250530-WA0116.jpg')] bg-cover bg-center"></div>
+                            <div class="p-4">
+                                <h3 class="font-bold">Vestidos</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 350 MZN</p>
+                            </div>
+                        </a>
+                        <a href="#categorias/casaco" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+                            <div class="h-32 md:h-40 bg-[url('IMG-20250530-WA0103.jpg')] bg-cover bg-center"></div>
+                            <div class="p-4">
+                                <h3 class="font-bold">Casacos</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 1000 MZN</p>
+                            </div>
+                        </a>
+                        <a href="#categorias/conjunto" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+                            <div class="h-32 md:h-40 bg-[url('IMG-20250530-WA0013.jpg')] bg-cover bg-center"></div>
+                            <div class="p-4">
+                                <h3 class="font-bold">Conjuntos</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 1000 MZN</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Popular Products -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6 pb-2 border-b dark:border-gray-700">Produtos Populares</h2>
+                    <div id="popular-products" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <!-- Products will be added here by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Page -->
+            <section id="categories-page" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Categorias</h1>
+                
+                <!-- Filters -->
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-6">
+                    <div class="flex flex-wrap items-center gap-4">
+                        <div class="w-full md:w-auto">
+                            <label class="block text-sm font-medium mb-1">Categoria</label>
+                            <select id="category-filter" class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-700">
+                                <option value="all">Todas</option>
+                                <option value="vestidos">Vestidos</option>
+                                <option value="camisas">Camisas</option>
+                                <option value="calcados">Calçados</option>
+                                <option value="calcas">Calças</option>
+                                <option value="casaco">Casacos</option>
+                                <option value="conjunto">Conjuntos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="w-full md:w-auto">
+                            <label class="block text-sm font-medium mb-1">Preço</label>
+                            <select id="price-filter" class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-700">
+                                <option value="all">Todos</option>
+                                <option value="low">Até 500 MZN</option>
+                                <option value="medium">500 - 1000 MZN</option>
+                                <option value="high">Acima de 1000 MZN</option>
+                            </select>
+                        </div>
+                        
+                        <div class="w-full md:w-auto">
+                            <label class="block text-sm font-medium mb-1">Ordenar por</label>
+                            <select id="sort-filter" class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-700">
+                                <option value="name">Nome</option>
+                                <option value="price-asc">Preço: Menor para Maior</option>
+                                <option value="price-desc">Preço: Maior para Menor</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products Container -->
+                <div id="category-products" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- Products will be added here by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Product Details Page -->
+            <section id="product-details-page" class="page hidden">
+                <div class="mb-4">
+                    <a href="#categorias" class="text-primary hover:underline">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar para categorias
+                    </a>
+                </div>
+                
+                <div id="product-details-container" class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <!-- Product details will be added here by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Cart Page -->
+            <section id="cart-page" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Carrinho de Compras</h1>
+                
+                <div id="cart-container">
+                    <!-- Cart will be added here by JavaScript -->
+                </div>
+            </section>
+
+            <!-- About Page -->
+            <section id="about-page" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Sobre Nós</h1>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                    <h2 class="text-2xl font-bold mb-4">Quem Somos</h2>
+                    <p class="mb-4">Somos uma loja de moda comprometida em oferecer as últimas tendências com qualidade e preços acessíveis. Nossa missão é ajudar nossos clientes a expressar sua individualidade através da moda.</p>
+                    <p>Trazemos para você as melhores peças selecionadas com cuidado para garantir estilo e conforto.</p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                    <h2 class="text-2xl font-bold mb-4">Contacto</h2>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt text-primary mr-2"></i>Quelimane e Milange, Zambézia, Moçambique</p>
+                    <p class="mb-2"><i class="fas fa-phone text-primary mr-2"></i> +258 86 547 2940</p>
+                    <p class="mb-2"><i class="fab fa-whatsapp text-primary mr-2"></i> +258 86 547 2940</p>
+                    <p><i class="fas fa-envelope text-primary mr-2"></i> Manuellafashionstore.com</p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-bold mb-4">Siga-nos</h2>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl text-primary hover:text-secondary transition"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl text-primary hover:text-secondary transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl text-primary hover:text-secondary transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl text-primary hover:text-secondary transition"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Page -->
+            <section id="faq-page" class="page hidden">
+                <h1 class="text-3xl font-bold mb-6">Perguntas Frequentes</h1>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-2">Como faço para comprar?</h3>
+                        <p>Navegue pelos produtos, adicione itens ao carrinho e clique em "Enviar via WhatsApp" para finalizar seu pedido diretamente pelo WhatsApp.</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-2">Qual é o prazo de entrega?</h3>
+                        <p>As entregas são realizadas em até 7 dias úteis após a confirmação do pagamento para Quelimane e Milange. Para outras regiões, o prazo é de até 15 dias úteis.</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-2">Quais são as formas de pagamento?</h3>
+                        <p>Aceitamos pagamentos via M-Pesa, e-Mola, transferência bancária e pagamento na entrega (apenas para Milange).</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-2">Como posso trocar um produto?</h3>
+                        <p>Trocas podem ser solicitadas em até 1 dia após o recebimento do produto. Entre em contato pelo nosso WhatsApp para iniciar o processo.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Vocês têm loja física?</h3>
+                        <p>Não. actualmente somente trabalhamos por encomendas online.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 shadow-inner pt-8 pb-6 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-4/12 mb-6">
+                    <h4 class="text-xl font-bold mb-4">Manuella Fashion<span class="text-primary">Store</span></h4>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Sua loja de moda com as últimas tendências e melhor qualidade.
+                    </p>
+                    <div class="mt-4 flex space-x-3">
+                        <a href="#" class="text-gray-500 hover:text-primary transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-primary transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-primary transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-primary transition"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-4/12 mb-6">
+                    <h4 class="text-xl font-bold mb-4">Links Rápidos</h4>
+                    <ul>
+                        <li class="mb-2"><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition">Início</a></li>
+                        <li class="mb-2"><a href="#categorias" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition">Categorias</a></li>
+                        <li class="mb-2"><a href="#sobre" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition">Sobre Nós</a></li>
+                        <li class="mb-2"><a href="#faq" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="w-full md:w-4/12 mb-6">
+                    <h4 class="text-xl font-bold mb-4">Contacto</h4>
+                    <p class="mb-2 text-gray-600 dark:text-gray-400"><i class="fas fa-map-marker-alt mr-2 text-primary"></i>Quelimane e Milange, Zambézia, Moçambique</p>
+                    <p class="mb-2 text-gray-600 dark:text-gray-400"><i class="fas fa-phone mr-2 text-primary"></i> +258 86 547 2940</p>
+                    <p class="mb-2 text-gray-600 dark:text-gray-400"><i class="fas fa-envelope mr-2 text-primary"></i> Manuellafashionstore@gmail.com</p>
+                </div>
+            </div>
+            
+            <hr class="border-gray-200 dark:border-gray-700 my-6">
+            
+            <div class="text-center text-gray-500 dark:text-gray-400 text-sm">
+                <p>&copy; 2025 Manuella FashionStore. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/258865472940" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-green-600 transition z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // Mock Database - Products
+        const products = [
+            {
+                id: 1,
+                name: "Conjunto rosa",
+                category: "conjunto",
+                price: 1040,
+                image: "IMG-20250530-WA0012.jpg",
+                description: "Conjunto xik para diversas ocasiões",
+                popular: true
+            },
+            {
+                id: 2,
+                name: "Conjunto branco",
+                category: "conjunto",
+                price: 1040,
+                image: "IMG-20250530-WA0013.jpg",
+                description: "Conjunto xik para diversas ocasiões",
+                popular: true
+            },
+            {
+                id: 3,
+                name: "Vestidos diversas cores",
+                category: "vestidos",
+                price: 350,
+                image: "IMG-20250530-WA0057.jpg",
+                description: "Vestidos perfeitos para encontros",
+                popular: true
+            },
+            {
+                id: 4,
+                name: "Vestidos diversas cores",
+                category: "vestidos",
+                price: 350,
+                image: "IMG-20250530-WA0035.jpg",
+                description: "Vestidos perfeitos para encontros",
+                popular: true
+            },
+            {
+                id: 5,
+                name: "Vestidos diversas cores",
+                category: "vestidos",
+                price: 350,
+                image: "IMG-20250530-WA0042.jpg",
+                description: "Vestidos perfeitos para encontros.",
+                popular: false
+            },
+            {
+                id: 6,
+                name: "conjuntos diversas cores",
+                category: "conjunto",
+                price: 350,
+                image: "IMG-20250530-WA0060.jpg",
+                description: "Conjuntos perfeitos para todas ocasioes.",
+                popular: false
+            },
+            {
+                id: 7,
+                name: "Vestidos diversas cores",
+                category: "vestidos",
+                price: 350,
+                image: "IMG-20250530-WA0025.jpg",
+                description: "Vestidos perfeitos para encontros.",
+                popular: false
+            },
+            {
+                id: 8,
+                name: "Vestidos diversas cores",
+                category: "vestidos",
+                price: 350,
+                image: "IMG-20250530-WA0029.jpg",
+                description: "Vestidos para usar e encantar todo mundo.",
+                popular: false
+            },
+            {
+                id: 9,
+                name: "Vestidos",
+                category: "vestidos",
+                price: 1230,
+                image: "IMG-20250530-WA0113.jpg",
+                description: "Vestido de gala dourado. S_3xl",
+                popular: false
+            },
+            {
+                id: 10,
+                name: "Vestidos",
+                category: "vestidos",
+                price: 1230,
+                image: "IMG-20250530-WA0116.jpg",
+                description: "Vestido de gala rocho. S_3xl",
+                popular: false
+            },
+            {
+                id: 11,
+                name: "Vestidos",
+                category: "vestidos",
+                price: 1230,
+                image: "IMG-20250530-WA0117.jpg",
+                description: "Vestido de gala. S_3xl.",
+                popular: false
+            },
+            {
+                id: 12,
+                name: "Vestidos",
+                category: "vestidos",
+                price: 1230,
+                image: "IMG-20250530-WA0114.jpg",
+                description: "Vestido de gala laranja e preto. S_3xl",
+                popular: true
+            },
+            {
+                id: 13,
+                name: "Vestidos",
+                category: "vestidos",
+                price: 1230,
+                image: "IMG-20250530-WA0115.jpg",
+                description: "Vestido de gala diversas cores. S_3xl",
+                popular: true
+            },
+            {
+                id: 14,
+                name: "Vestidos",
+                category: "vestidos",
+                price: 1000,
+                image: "IMG-20250530-WA0020.jpg",
+                description: "Vestidos para as compras.",
+                popular: true
+            },
+            {
+                id: 15,
+                name: "Vestidos",
+                category: "vestidos",
+                price: 1000,
+                image: "IMG-20250530-WA0021.jpg",
+                description: "Vestidos para as compras.",
+                popular: true
+            },
+            {
+                id: 16,
+                name: "Conjuntos de verao",
+                category: "conjunto",
+                price: 550,
+                image: "IMG-20250530-WA0016.jpg",
+                description: "Conjuntos para arrasar",
+                popular: true
+            },
+            {
+                id: 17,
+                name: "Vestidos formais",
+                category: "vestidos",
+                price: 1040,
+                image: "IMG-20250530-WA0015.jpg",
+                description: "Vestidos para eventos importantes",
+                popular: true
+            },
+            {
+                id: 18,
+                name: "Sapatos PUMA preto branco",
+                category: "calcados",
+                price: 1010,
+                image: "IMG-20250530-WA0077.jpg",
+                description: "Sapatos para flutuar durante o passeio",
+                popular: true
+            },
+            {
+                id: 19,
+                name: "Sapatos PUMA vermelho branco",
+                category: "calcados",
+                price: 1010,
+                image: "IMG-20250530-WA0084.jpg",
+                description: "Sapatos para flutuar durante o passeio",
+                popular: true
+            },
+            {
+                id: 20,
+                name: "Sapatos PUMA rosa branco",
+                category: "calcados",
+                price: 1010,
+                image: "IMG-20250530-WA0085.jpg",
+                description: "Não pise o chão com esses sapatos.",
+                popular: true
+            },
+            {
+                id: 21,
+                name: "Sapatos PUMA creme branco",
+                category: "calcados",
+                price: 1010,
+                image: "IMG-20250530-WA0086.jpg",
+                description: "Proibido falar de moda se não ter essas tilhas.",
+                popular: true
+            },
+            {
+                id: 22,
+                name: "Sapatos PUMA branco",
+                category: "calcados",
+                price: 1010,
+                image: "IMG-20250530-WA0098.jpg",
+                description: "Proibido falar de moda se não ter essas tilhas.",
+                popular: true
+            },
+            {
+                id: 23,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0087.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 24,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0089.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 25,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0090.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 26,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0091.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 27,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0092.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 28,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0093.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 29,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0094.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 30,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0095.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 31,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0096.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 32,
+                name: "Botas femininas",
+                category: "calcados",
+                price: 1200,
+                image: "IMG-20250530-WA0097.jpg",
+                description: "Botas femininas",
+                popular: true
+            },
+            {
+                id: 33,
+                name: "Casaco",
+                category: "casaco",
+                price: 1125,
+                image: "IMG-20250530-WA0103.jpg",
+                description: "Casacos ideais para junho",
+                popular: true
+            },
+            {
+                id: 34,
+                name: "Casaco",
+                category: "casaco",
+                price: 1125,
+                image: "IMG-20250530-WA0104.jpg",
+                description: "Casacos ideais para junho",
+                popular: true
+            },
+            {
+                id: 35,
+                name: "Casaco",
+                category: "casaco",
+                price: 1125,
+                image: "IMG-20250530-WA0105.jpg",
+                description: "Casacos ideais para junho",
+                popular: true
+            },
+            {
+                id: 36,
+                name: "Casaco",
+                category: "casaco",
+                price: 1125,
+                image: "IMG-20250530-WA0106.jpg",
+                description: "Casacos ideais para junho",
+                popular: true
+            },
+        ];
+
+        // Shopping Cart
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Update cart count
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        }
+
+        // Add to cart function
+        function addToCart(productId, quantity = 1) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            
+            // Show notification
+            showNotification(`${product.name} adicionado ao carrinho!`);
+        }
+
+        // Remove from cart function
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+        }
+
+        // Update cart item quantity
+        function updateCartItemQuantity(productId, quantity) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = quantity;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                    return;
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                renderCart();
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 transition-opacity duration-300';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 2000);
+        }
+
+        // Render products in home page
+        function renderPopularProducts() {
+            const container = document.getElementById('popular-products');
+            const popularProducts = products.filter(product => product.popular);
+            
+            container.innerHTML = '';
+            
+            popularProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition overflow-hidden';
+                
+                productCard.innerHTML = `
+                    <a href="#produto/${product.id}" class="block">
+                        <div class="h-48 overflow-hidden">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold mb-1 truncate">${product.name}</h3>
+                            <p class="text-primary font-bold">${product.price} MZN</p>
+                        </div>
+                    </a>
+                    <div class="px-4 pb-4">
+                        <button data-product-id="${product.id}" class="add-to-cart w-full bg-primary text-white py-2 rounded hover:bg-secondary transition">
+                            <i class="fas fa-shopping-cart mr-2"></i>Adicionar
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(productCard);
+            });
+            
+            // Add event listeners to "Add to Cart" buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const productId = parseInt(button.getAttribute('data-product-id'));
+                    addToCart(productId);
+                });
+            });
+        }
+
+        // Render products in category page
+        function renderCategoryProducts(category = 'all', priceFilter = 'all', sortBy = 'name') {
+            const container = document.getElementById('category-products');
+            
+            // Filter products
+            let filteredProducts = products;
+            
+            if (category !== 'all') {
+                filteredProducts = filteredProducts.filter(product => product.category === category);
+            }
+            
+            if (priceFilter !== 'all') {
+                switch (priceFilter) {
+                    case 'low':
+                        filteredProducts = filteredProducts.filter(product => product.price <= 500);
+                        break;
+                    case 'medium':
+                        filteredProducts = filteredProducts.filter(product => product.price > 500 && product.price <= 1000);
+                        break;
+                    case 'high':
+                        filteredProducts = filteredProducts.filter(product => product.price > 1000);
+                        break;
+                }
+            }
+            
+            // Sort products
+            switch (sortBy) {
+                case 'name':
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'price-asc':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+            }
+            
+            container.innerHTML = '';
+            
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-search text-5xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                        <p class="text-xl text-gray-500 dark:text-gray-400">Nenhum produto encontrado</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition overflow-hidden';
+                
+                productCard.innerHTML = `
+                    <a href="#produto/${product.id}" class="block">
+                        <div class="h-48 overflow-hidden">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold mb-1 truncate">${product.name}</h3>
+                            <p class="text-primary font-bold">${product.price} MZN</p>
+                        </div>
+                    </a>
+                    <div class="px-4 pb-4">
+                        <button data-product-id="${product.id}" class="add-to-cart w-full bg-primary text-white py-2 rounded hover:bg-secondary transition">
+                            <i class="fas fa-shopping-cart mr-2"></i>Adicionar
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(productCard);
+            });
+            
+            // Add event listeners to "Add to Cart" buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const productId = parseInt(button.getAttribute('data-product-id'));
+                    addToCart(productId);
+                });
+            });
+        }
+
+        // Render product details
+        function renderProductDetails(productId) {
+            const container = document.getElementById('product-details-container');
+            const product = products.find(p => p.id === parseInt(productId));
+            
+            if (!product) {
+                container.innerHTML = `
+                    <div class="p-6 text-center">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 text-5xl mb-4"></i>
+                        <h2 class="text-2xl font-bold mb-2">Produto não encontrado</h2>
+                        <p class="mb-4">O produto que você está procurando não existe ou foi removido.</p>
+                        <a href="#categorias" class="inline-block bg-primary text-white px-6 py-2 rounded-lg hover:bg-secondary transition">
+                            Voltar para categorias
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-auto object-contain">
+                    </div>
+                    
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">${product.name}</h2>
+                        <p class="text-3xl text-primary font-bold mb-4">${product.price} MZN</p>
+                        
+                        <div class="mb-6">
+                            <h3 class="font-semibold mb-2">Descrição</h3>
+                            <p class="text-gray-600 dark:text-gray-400">${product.description}</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="font-semibold mb-2">Quantidade</h3>
+                            <div class="flex items-center">
+                                <button id="decrease-quantity" class="bg-gray-200 dark:bg-gray-700 px-3 py-2 rounded-l">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" id="product-quantity" min="1" value="1" class="w-16 text-center py-2 border-y border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+                                <button id="increase-quantity" class="bg-gray-200 dark:bg-gray-700 px-3 py-2 rounded-r">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button id="add-to-cart-detail" data-product-id="${product.id}" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-secondary transition mb-4">
+                            <i class="fas fa-shopping-cart mr-2"></i>Adicionar ao Carrinho
+                        </button>
+                        
+                        <a href="#carrinho" id="buy-now" data-product-id="${product.id}" class="block w-full bg-secondary text-white py-3 rounded-lg hover:bg-primary transition text-center">
+                            <i class="fas fa-bolt mr-2"></i>Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners
+            const quantityInput = document.getElementById('product-quantity');
+            
+            document.getElementById('decrease-quantity').addEventListener('click', () => {
+                if (quantityInput.value > 1) {
+                    quantityInput.value = parseInt(quantityInput.value) - 1;
+                }
+            });
+            
+            document.getElementById('increase-quantity').addEventListener('click', () => {
+                quantityInput.value = parseInt(quantityInput.value) + 1;
+            });
+            
+            document.getElementById('add-to-cart-detail').addEventListener('click', () => {
+                const quantity = parseInt(quantityInput.value);
+                addToCart(product.id, quantity);
+            });
+            
+            document.getElementById('buy-now').addEventListener('click', (e) => {
+                e.preventDefault();
+                const quantity = parseInt(quantityInput.value);
+                addToCart(product.id, quantity);
+                window.location.hash = 'carrinho';
+            });
+        }
+
+        // Render cart
+        function renderCart() {
+            const container = document.getElementById('cart-container');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center">
+                        <i class="fas fa-shopping-cart text-5xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                        <h2 class="text-2xl font-bold mb-2">Seu carrinho está vazio</h2>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Adicione produtos ao seu carrinho para continuar</p>
+                        <a href="#categorias" class="inline-block bg-primary text-white px-6 py-2 rounded hover:bg-secondary transition">
+                            Continuar comprando
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                            <div class="p-4 border-b dark:border-gray-700">
+                                <h2 class="text-xl font-bold">Itens do Carrinho</h2>
+                            </div>
+                            <div id="cart-items" class="divide-y dark:divide-gray-700">
+                                <!-- Cart items will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:col-span-1">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sticky top-20">
+                            <h2 class="text-xl font-bold mb-4">Resumo do Pedido</h2>
+                            
+                            <div class="flex justify-between mb-2">
+                                <span>Subtotal:</span>
+                                <span>${total} MZN</span>
+                            </div>
+                            
+                            <div class="flex justify-between mb-4">
+                                <span>Entrega:</span>
+                                <span>Calculado no checkout</span>
+                            </div>
+                            
+                            <div class="border-t dark:border-gray-700 pt-4 mb-4">
+                                <div class="flex justify-between font-bold text-lg">
+                                    <span>Total:</span>
+                                    <span>${total} MZN</span>
+                                </div>
+                            </div>
+                            
+                            <button id="whatsapp-checkout" class="w-full bg-green-500 text-white py-3 rounded hover:bg-green-600 transition flex items-center justify-center">
+                                <i class="fab fa-whatsapp text-xl mr-2"></i>
+                                Finalizar via WhatsApp
+                            </button>
+                            
+                            <a href="#categorias" class="block text-center mt-4 text-primary hover:underline">
+                                Continuar comprando
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const cartItemsContainer = document.getElementById('cart-items');
+            
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'p-4 flex flex-wrap items-center';
+                
+                cartItem.innerHTML = `
+                    <div class="w-16 h-16 mr-4 flex-shrink-0">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover rounded">
+                    </div>
+                    
+                    <div class="flex-grow mb-2 md:mb-0">
+                        <h3 class="font-semibold">${item.name}</h3>
+                        <p class="text-primary">${item.price} MZN</p>
+                    </div>
+                    
+                    <div class="flex items-center mr-4">
+                        <button data-id="${item.id}" class="decrease-cart-item bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-l">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="number" value="${item.quantity}" min="1" class="w-12 text-center py-1 border-y border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 cart-item-quantity" data-id="${item.id}">
+                        <button data-id="${item.id}" class="increase-cart-item bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-r">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="text-right md:ml-4">
+                        <p class="font-bold">${item.price * item.quantity} MZN</p>
+                        <button data-id="${item.id}" class="remove-cart-item text-red-500 hover:text-red-700 transition mt-1">
+                            <i class="fas fa-trash-alt mr-1"></i>Remover
+                        </button>
+                    </div>
+                `;
+                
+                cartItemsContainer.appendChild(cartItem);
+            });
+            
+            // Add event listeners
+            document.querySelectorAll('.decrease-cart-item').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = parseInt(button.getAttribute('data-id'));
+                    const item = cart.find(item => item.id === id);
+                    if (item && item.quantity > 1) {
+                        updateCartItemQuantity(id, item.quantity - 1);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.increase-cart-item').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = parseInt(button.getAttribute('data-id'));
+                    const item = cart.find(item => item.id === id);
+                    if (item) {
+                        updateCartItemQuantity(id, item.quantity + 1);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.cart-item-quantity').forEach(input => {
+                input.addEventListener('change', () => {
+                    const id = parseInt(input.getAttribute('data-id'));
+                    const quantity = parseInt(input.value);
+                    if (quantity > 0) {
+                        updateCartItemQuantity(id, quantity);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.remove-cart-item').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = parseInt(button.getAttribute('data-id'));
+                    removeFromCart(id);
+                });
+            });
+            
+            // WhatsApp checkout
+           document.getElementById('whatsapp-checkout').addEventListener('click', () => {
+    let message = "Olá! Gostaria de fazer um pedido:%0A%0A";
+    
+    cart.forEach(item => {
+        let imageUrl = item.image.startsWith("http") 
+            ? item.image 
+            : `${window.location.origin}/${item.image}`;
+        message += `- ${item.quantity}x ${item.name} (${item.price} MZN)%0AImagem: ${imageUrl}%0A%0A`;
+    });
+    
+    let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    message += `Total: ${total} MZN%0A`;
+    message += "Por favor, confirme a disponibilidade e formas de pagamento.";
+    
+    window.open(`https://wa.me/258865472940?text=${encodeURIComponent(message)}`, '_blank');
+});
+        }
+
+        // Search function
+        function searchProducts(query) {
+            if (!query.trim()) return;
+            
+            const searchTerm = query.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) || 
+                product.description.toLowerCase().includes(searchTerm) ||
+                product.category.toLowerCase().includes(searchTerm)
+            );
+            
+            if (filteredProducts.length > 0) {
+                window.location.hash = 'categorias';
+                
+                setTimeout(() => {
+                    const container = document.getElementById('category-products');
+                    container.innerHTML = '';
+                    
+                    // Show search results title
+                    const searchTitle = document.createElement('div');
+                    searchTitle.className = 'col-span-full mb-4';
+                    searchTitle.innerHTML = `
+                        <h2 class="text-xl font-bold">Resultados para: "${query}"</h2>
+                        <p class="text-gray-600 dark:text-gray-400">${filteredProducts.length} produtos encontrados</p>
+                    `;
+                    container.appendChild(searchTitle);
+                    
+                    filteredProducts.forEach(product => {
+                        const productCard = document.createElement('div');
+                        productCard.className = 'bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition overflow-hidden';
+                        
+                        productCard.innerHTML = `
+                            <a href="#produto/${product.id}" class="block">
+                                <div class="h-48 overflow-hidden">
+                                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="font-semibold mb-1 truncate">${product.name}</h3>
+                                    <p class="text-primary font-bold">${product.price} MZN</p>
+                                </div>
+                            </a>
+                            <div class="px-4 pb-4">
+                                <button data-product-id="${product.id}" class="add-to-cart w-full bg-primary text-white py-2 rounded hover:bg-secondary transition">
+                                    <i class="fas fa-shopping-cart mr-2"></i>Adicionar
+                                </button>
+                            </div>
+                        `;
+                        
+                        container.appendChild(productCard);
+                    });
+                    
+                    // Add event listeners to "Add to Cart" buttons
+                    document.querySelectorAll('.add-to-cart').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const productId = parseInt(button.getAttribute('data-product-id'));
+                            addToCart(productId);
+                        });
+                    });
+                }, 100);
+            } else {
+                window.location.hash = 'categorias';
+                
+                setTimeout(() => {
+                    const container = document.getElementById('category-products');
+                    container.innerHTML = `
+                        <div class="col-span-full text-center py-12">
+                            <i class="fas fa-search text-5xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                            <h2 class="text-xl font-bold mb-2">Nenhum resultado para: "${query}"</h2>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">Tente pesquisar com outras palavras ou categorias.</p>
+                            <a href="#categorias" class="inline-block bg-primary text-white px-6 py-2 rounded hover:bg-secondary transition">
+                                Ver todas as categorias
+                            </a>
+                        </div>
+                    `;
+                }, 100);
+            }
+        }
+
+        // Router Function
+        function router() {
+            const hash = window.location.hash.slice(1) || 'home';
+            const pages = document.querySelectorAll('.page');
+            
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show active page
+            if (hash.startsWith('categorias')) {
+                document.getElementById('categories-page').classList.remove('hidden');
+                
+                // Check if there's a specific category
+                const category = hash.split('/')[1] || 'all';
+                document.getElementById('category-filter').value = category;
+                
+                renderCategoryProducts(category, 'all', 'name');
+            } else if (hash.startsWith('produto')) {
+                document.getElementById('product-details-page').classList.remove('hidden');
+                
+                const productId = hash.split('/')[1];
+                renderProductDetails(productId);
+            } else if (hash === 'carrinho') {
+                document.getElementById('cart-page').classList.remove('hidden');
+                renderCart();
+            } else if (hash === 'sobre') {
+                document.getElementById('about-page').classList.remove('hidden');
+            } else if (hash === 'faq') {
+                document.getElementById('faq-page').classList.remove('hidden');
+            } else {
+                // Default to home
+                document.getElementById('home-page').classList.remove('hidden');
+                renderPopularProducts();
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize
+        function init() {
+            // Update cart count
+            updateCartCount();
+            
+            // Add event listeners
+            window.addEventListener('hashchange', router);
+            
+            // Filter event listeners
+            document.getElementById('category-filter').addEventListener('change', (e) => {
+                const category = e.target.value;
+                const priceFilter = document.getElementById('price-filter').value;
+                const sortBy = document.getElementById('sort-filter').value;
+                
+                renderCategoryProducts(category, priceFilter, sortBy);
+            });
+            
+            document.getElementById('price-filter').addEventListener('change', (e) => {
+                const category = document.getElementById('category-filter').value;
+                const priceFilter = e.target.value;
+                const sortBy = document.getElementById('sort-filter').value;
+                
+                renderCategoryProducts(category, priceFilter, sortBy);
+            });
+            
+            document.getElementById('sort-filter').addEventListener('change', (e) => {
+                const category = document.getElementById('category-filter').value;
+                const priceFilter = document.getElementById('price-filter').value;
+                const sortBy = e.target.value;
+                
+                renderCategoryProducts(category, priceFilter, sortBy);
+            });
+            
+            // Search
+            const desktopSearch = document.getElementById('desktop-search');
+            const mobileSearch = document.getElementById('mobile-search');
+            
+            desktopSearch.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchProducts(desktopSearch.value);
+                    desktopSearch.value = '';
+                }
+            });
+            
+            mobileSearch.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchProducts(mobileSearch.value);
+                    mobileSearch.value = '';
+                }
+            });
+            
+            // Initial route
+            router();
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
