@@ -42,6 +42,17 @@
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
+    
+  #promo-banner {
+    width: 100%;
+    background-color: #ffe4e1;
+    text-align: center;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
     </style>
 </head>
 <body class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
@@ -58,6 +69,10 @@
             }
         });
     </script>
+<!-- Banner promocional fixo -->
+<div id="promo-banner">
+  <a href="https://diua-maker.github.io/galeria/" target="_blank"> Encomendas de retrato em quelimane! Clique aqui e faça sua encomenda
+</div>
 
     <!-- Header -->
     <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
@@ -1320,3 +1335,4 @@ document.getElementById('whatsapp-checkout').addEventListener('click', () => {
     </script>
 </body>
 </html>
+ 
