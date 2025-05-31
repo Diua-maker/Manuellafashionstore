@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -43,16 +45,31 @@
             scrollbar-width: none;  /* Firefox */
         }
     
-  #promo-banner {
-    width: 100%;
-    background-color: #ffe4e1;
-    text-align: center;
-    padding: 10px 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+        #promo-banner {
+            width: 100%;
+            background-color: #ffe4e1;
+            text-align: center;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #ff0000;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
@@ -69,10 +86,20 @@
             }
         });
     </script>
-<!-- Banner promocional fixo -->
-<div id="promo-banner">
-  <a href="https://diua-maker.github.io/galeria/" target="_blank"> Encomendas de retrato em quelimane! Clique aqui e faça sua encomenda
-</div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 flex items-center">
+            <div class="loading mr-3"></div>
+            <span>Carregando produtos...</span>
+        </div>
+    </div>
+
+    <!-- Banner promocional fixo -->
+    <div id="promo-banner">
+        <a href="https://diua-maker.github.io/galeria/" target="_blank"> Encomendas de retrato em quelimane! Clique aqui e faça sua encomenda
+        </a>
+    </div>
 
     <!-- Header -->
     <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
@@ -88,7 +115,7 @@
                     <div class="relative w-full">
                         <input type="text" id="desktop-search" placeholder="Pesquisar produtos..." 
                             class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
-                            bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                            bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary text-base">
                         <div class="absolute left-3 top-2.5 text-gray-400">
                             <i class="fas fa-search"></i>
                         </div>
@@ -122,7 +149,7 @@
                 <div class="relative">
                     <input type="text" id="mobile-search" placeholder="Pesquisar produtos..." 
                         class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
-                        bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                        bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary text-base">
                     <div class="absolute left-3 top-2.5 text-gray-400">
                         <i class="fas fa-search"></i>
                     </div>
@@ -152,49 +179,8 @@
                 <!-- Category Highlights -->
                 <div class="mb-12">
                     <h2 class="text-2xl font-bold mb-6 pb-2 border-b dark:border-gray-700">Categorias</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <a href="#categorias/camisas" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-                            <div class="h-32 md:h-40 bg-[url('https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg')] bg-cover bg-center"></div>
-                            <div class="p-4">
-                                <h3 class="font-bold">Camisas</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 450 MZN</p>
-                            </div>
-                        </a>
-                        <a href="#categorias/calcados" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-                            <div class="h-32 md:h-40 bg-[url('IMG-20250530-WA0089.jpg')] bg-cover bg-center"></div>
-                            <div class="p-4">
-                                <h3 class="font-bold">Calçados</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 1000 MZN</p>
-                            </div>
-                        </a>
-                        <a href="#categorias/calcas" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-                            <div class="h-32 md:h-40 bg-[url('https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg')] bg-cover bg-center"></div>
-                            <div class="p-4">
-                                <h3 class="font-bold">Calças</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 650 MZN</p>
-                            </div>
-                        </a>
-                        <a href="#categorias/vestidos" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-                            <div class="h-32 md:h-40 bg-[url('IMG-20250530-WA0116.jpg')] bg-cover bg-center"></div>
-                            <div class="p-4">
-                                <h3 class="font-bold">Vestidos</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 350 MZN</p>
-                            </div>
-                        </a>
-                        <a href="#categorias/casaco" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-                            <div class="h-32 md:h-40 bg-[url('IMG-20250530-WA0103.jpg')] bg-cover bg-center"></div>
-                            <div class="p-4">
-                                <h3 class="font-bold">Casacos</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 1000 MZN</p>
-                            </div>
-                        </a>
-                        <a href="#categorias/conjunto" class="category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-                            <div class="h-32 md:h-40 bg-[url('IMG-20250530-WA0013.jpg')] bg-cover bg-center"></div>
-                            <div class="p-4">
-                                <h3 class="font-bold">Conjuntos</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">A partir de 1000 MZN</p>
-                            </div>
-                        </a>
+                    <div id="categories-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <!-- Categories will be populated dynamically -->
                     </div>
                 </div>
 
@@ -218,12 +204,6 @@
                             <label class="block text-sm font-medium mb-1">Categoria</label>
                             <select id="category-filter" class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-700">
                                 <option value="all">Todas</option>
-                                <option value="vestidos">Vestidos</option>
-                                <option value="camisas">Camisas</option>
-                                <option value="calcados">Calçados</option>
-                                <option value="calcas">Calças</option>
-                                <option value="casaco">Casacos</option>
-                                <option value="conjunto">Conjuntos</option>
                             </select>
                         </div>
                         
@@ -389,337 +369,123 @@
 
     <!-- JavaScript -->
     <script>
-        // Mock Database - Products
-        const products = [
-            {
-                id: 1,
-                name: "Conjunto rosa",
-                category: "conjunto",
-                price: 1040,
-                image: "IMG-20250530-WA0012.jpg",
-                description: "Conjunto xik para diversas ocasiões",
-                popular: true
-            },
-            {
-                id: 2,
-                name: "Conjunto branco",
-                category: "conjunto",
-                price: 1040,
-                image: "IMG-20250530-WA0013.jpg",
-                description: "Conjunto xik para diversas ocasiões",
-                popular: true
-            },
-            {
-                id: 3,
-                name: "Vestidos diversas cores",
-                category: "vestidos",
-                price: 350,
-                image: "IMG-20250530-WA0057.jpg",
-                description: "Vestidos perfeitos para encontros",
-                popular: true
-            },
-            {
-                id: 4,
-                name: "Vestidos diversas cores",
-                category: "vestidos",
-                price: 350,
-                image: "IMG-20250530-WA0035.jpg",
-                description: "Vestidos perfeitos para encontros",
-                popular: true
-            },
-            {
-                id: 5,
-                name: "Vestidos diversas cores",
-                category: "vestidos",
-                price: 350,
-                image: "IMG-20250530-WA0042.jpg",
-                description: "Vestidos perfeitos para encontros.",
-                popular: false
-            },
-            {
-                id: 6,
-                name: "conjuntos diversas cores",
-                category: "conjunto",
-                price: 350,
-                image: "IMG-20250530-WA0060.jpg",
-                description: "Conjuntos perfeitos para todas ocasioes.",
-                popular: false
-            },
-            {
-                id: 7,
-                name: "Vestidos diversas cores",
-                category: "vestidos",
-                price: 350,
-                image: "IMG-20250530-WA0025.jpg",
-                description: "Vestidos perfeitos para encontros.",
-                popular: false
-            },
-            {
-                id: 8,
-                name: "Vestidos diversas cores",
-                category: "vestidos",
-                price: 350,
-                image: "IMG-20250530-WA0029.jpg",
-                description: "Vestidos para usar e encantar todo mundo.",
-                popular: false
-            },
-            {
-                id: 9,
-                name: "Vestidos",
-                category: "vestidos",
-                price: 1230,
-                image: "IMG-20250530-WA0113.jpg",
-                description: "Vestido de gala dourado. S_3xl",
-                popular: false
-            },
-            {
-                id: 10,
-                name: "Vestidos",
-                category: "vestidos",
-                price: 1230,
-                image: "IMG-20250530-WA0116.jpg",
-                description: "Vestido de gala rocho. S_3xl",
-                popular: false
-            },
-            {
-                id: 11,
-                name: "Vestidos",
-                category: "vestidos",
-                price: 1230,
-                image: "IMG-20250530-WA0117.jpg",
-                description: "Vestido de gala. S_3xl.",
-                popular: false
-            },
-            {
-                id: 12,
-                name: "Vestidos",
-                category: "vestidos",
-                price: 1230,
-                image: "IMG-20250530-WA0114.jpg",
-                description: "Vestido de gala laranja e preto. S_3xl",
-                popular: true
-            },
-            {
-                id: 13,
-                name: "Vestidos",
-                category: "vestidos",
-                price: 1230,
-                image: "IMG-20250530-WA0115.jpg",
-                description: "Vestido de gala diversas cores. S_3xl",
-                popular: true
-            },
-            {
-                id: 14,
-                name: "Vestidos",
-                category: "vestidos",
-                price: 1000,
-                image: "IMG-20250530-WA0020.jpg",
-                description: "Vestidos para as compras.",
-                popular: true
-            },
-            {
-                id: 15,
-                name: "Vestidos",
-                category: "vestidos",
-                price: 1000,
-                image: "IMG-20250530-WA0021.jpg",
-                description: "Vestidos para as compras.",
-                popular: true
-            },
-            {
-                id: 16,
-                name: "Conjuntos de verao",
-                category: "conjunto",
-                price: 550,
-                image: "IMG-20250530-WA0016.jpg",
-                description: "Conjuntos para arrasar",
-                popular: true
-            },
-            {
-                id: 17,
-                name: "Vestidos formais",
-                category: "vestidos",
-                price: 1040,
-                image: "IMG-20250530-WA0015.jpg",
-                description: "Vestidos para eventos importantes",
-                popular: true
-            },
-            {
-                id: 18,
-                name: "Sapatos PUMA preto branco",
-                category: "calcados",
-                price: 1010,
-                image: "IMG-20250530-WA0077.jpg",
-                description: "Sapatos para flutuar durante o passeio",
-                popular: true
-            },
-            {
-                id: 19,
-                name: "Sapatos PUMA vermelho branco",
-                category: "calcados",
-                price: 1010,
-                image: "IMG-20250530-WA0084.jpg",
-                description: "Sapatos para flutuar durante o passeio",
-                popular: true
-            },
-            {
-                id: 20,
-                name: "Sapatos PUMA rosa branco",
-                category: "calcados",
-                price: 1010,
-                image: "IMG-20250530-WA0085.jpg",
-                description: "Não pise o chão com esses sapatos.",
-                popular: true
-            },
-            {
-                id: 21,
-                name: "Sapatos PUMA creme branco",
-                category: "calcados",
-                price: 1010,
-                image: "IMG-20250530-WA0086.jpg",
-                description: "Proibido falar de moda se não ter essas tilhas.",
-                popular: true
-            },
-            {
-                id: 22,
-                name: "Sapatos PUMA branco",
-                category: "calcados",
-                price: 1010,
-                image: "IMG-20250530-WA0098.jpg",
-                description: "Proibido falar de moda se não ter essas tilhas.",
-                popular: true
-            },
-            {
-                id: 23,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0087.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 24,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0089.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 25,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0090.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 26,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0091.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 27,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0092.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 28,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0093.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 29,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0094.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 30,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0095.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 31,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0096.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 32,
-                name: "Botas femininas",
-                category: "calcados",
-                price: 1200,
-                image: "IMG-20250530-WA0097.jpg",
-                description: "Botas femininas",
-                popular: true
-            },
-            {
-                id: 33,
-                name: "Casaco",
-                category: "casaco",
-                price: 1125,
-                image: "IMG-20250530-WA0103.jpg",
-                description: "Casacos ideais para junho",
-                popular: true
-            },
-            {
-                id: 34,
-                name: "Casaco",
-                category: "casaco",
-                price: 1125,
-                image: "IMG-20250530-WA0104.jpg",
-                description: "Casacos ideais para junho",
-                popular: true
-            },
-            {
-                id: 35,
-                name: "Casaco",
-                category: "casaco",
-                price: 1125,
-                image: "IMG-20250530-WA0105.jpg",
-                description: "Casacos ideais para junho",
-                popular: true
-            },
-            {
-                id: 36,
-                name: "Casaco",
-                category: "casaco",
-                price: 1125,
-                image: "IMG-20250530-WA0106.jpg",
-                description: "Casacos ideais para junho",
-                popular: true
-            },
-        ];
-
-        // Shopping Cart
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://fsjywjunumxmhhupqnvg.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzanl3anVudW14bWhodXBxbnZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg3MTgyODcsImV4cCI6MjA2NDI5NDI4N30.VYVyMGR77KZ0R8g5xOoF6mdJ8UiAXuNg_nkgPJp2P-k'
         
+        
+        // Initialize Supabase
+        const { createClient } = supabase
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+        // Global variables
+        let products = [];
+        let categories = new Set();
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Admin credentials (altere estes valores)
+        const adminCredentials = {
+            nome: "manuella",
+            chave: "mf123"
+        };
+
+        // Load products from Supabase
+        async function loadProducts() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('products')
+                    .select('*')
+                    .eq('active', true)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                products = data || [];
+                categories = new Set();
+                
+                products.forEach(product => {
+                    categories.add(product.category);
+                });
+
+                hideLoading();
+                populateCategories();
+                renderPopularProducts();
+                console.log(`${products.length} produtos carregados do Supabase`);
+            } catch (error) {
+                console.error('Erro ao carregar produtos:', error);
+                hideLoading();
+                showError('Erro ao carregar produtos. Verifique sua conexão com a internet.');
+            }
+        }
+
+        // Show/Hide loading
+        function showLoading() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+
+        // Show error
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'fixed top-20 right-4 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50';
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                document.body.removeChild(errorDiv);
+            }, 5000);
+        }
+
+        // Populate categories dynamically
+        function populateCategories() {
+            const categoryFilter = document.getElementById('category-filter');
+            const categoriesGrid = document.getElementById('categories-grid');
+            
+            // Clear existing options (keep "Todas")
+            const allOption = categoryFilter.querySelector('option[value="all"]');
+            categoryFilter.innerHTML = '';
+            categoryFilter.appendChild(allOption);
+            
+            // Clear categories grid
+            categoriesGrid.innerHTML = '';
+
+            // Add categories to filter and grid
+            const sortedCategories = Array.from(categories).sort();
+            
+            sortedCategories.forEach(category => {
+                // Add to filter
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                categoryFilter.appendChild(option);
+
+                // Add to grid
+                const categoryProducts = products.filter(p => p.category === category);
+                const minPrice = Math.min(...categoryProducts.map(p => p.price));
+                const sampleProduct = categoryProducts[0];
+
+                const categoryCard = document.createElement('a');
+                categoryCard.href = `#categorias/${category}`;
+                categoryCard.className = 'category-card bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition';
+                
+                categoryCard.innerHTML = `
+                    <div class="h-32 md:h-40 bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+                        ${sampleProduct ? `<img src="${sampleProduct.image}" alt="${category}" class="w-full h-full object-cover">` : 
+                          `<i class="fas fa-shirt text-4xl text-gray-400"></i>`}
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold">${category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">A partir de ${minPrice} MZN</p>
+                    </div>
+                `;
+                
+                categoriesGrid.appendChild(categoryCard);
+            });
+        }
+
         // Update cart count
         function updateCartCount() {
             const cartCount = document.getElementById('cart-count');
@@ -729,6 +495,8 @@
         // Add to cart function
         function addToCart(productId, quantity = 1) {
             const product = products.find(p => p.id === productId);
+            if (!product) return;
+
             const existingItem = cart.find(item => item.id === productId);
             
             if (existingItem) {
@@ -783,7 +551,9 @@
             setTimeout(() => {
                 notification.style.opacity = '0';
                 setTimeout(() => {
-                    document.body.removeChild(notification);
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
                 }, 300);
             }, 2000);
         }
@@ -791,9 +561,19 @@
         // Render products in home page
         function renderPopularProducts() {
             const container = document.getElementById('popular-products');
-            const popularProducts = products.filter(product => product.popular);
+            const popularProducts = products.filter(product => product.popular).slice(0, 8);
             
             container.innerHTML = '';
+            
+            if (popularProducts.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-box-open text-5xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                        <p class="text-xl text-gray-500 dark:text-gray-400">Nenhum produto popular disponível</p>
+                    </div>
+                `;
+                return;
+            }
             
             popularProducts.forEach(product => {
                 const productCard = document.createElement('div');
@@ -802,7 +582,7 @@
                 productCard.innerHTML = `
                     <a href="#produto/${product.id}" class="block">
                         <div class="h-48 overflow-hidden">
-                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover" loading="lazy">
                         </div>
                         <div class="p-4">
                             <h3 class="font-semibold mb-1 truncate">${product.name}</h3>
@@ -823,7 +603,7 @@
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const productId = parseInt(button.getAttribute('data-product-id'));
+                    const productId = button.getAttribute('data-product-id');
                     addToCart(productId);
                 });
             });
@@ -886,7 +666,7 @@
                 productCard.innerHTML = `
                     <a href="#produto/${product.id}" class="block">
                         <div class="h-48 overflow-hidden">
-                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover" loading="lazy">
                         </div>
                         <div class="p-4">
                             <h3 class="font-semibold mb-1 truncate">${product.name}</h3>
@@ -907,7 +687,7 @@
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const productId = parseInt(button.getAttribute('data-product-id'));
+                    const productId = button.getAttribute('data-product-id');
                     addToCart(productId);
                 });
             });
@@ -916,7 +696,7 @@
         // Render product details
         function renderProductDetails(productId) {
             const container = document.getElementById('product-details-container');
-            const product = products.find(p => p.id === parseInt(productId));
+            const product = products.find(p => p.id === productId);
             
             if (!product) {
                 container.innerHTML = `
@@ -945,6 +725,11 @@
                         <div class="mb-6">
                             <h3 class="font-semibold mb-2">Descrição</h3>
                             <p class="text-gray-600 dark:text-gray-400">${product.description}</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="font-semibold mb-2">Categoria</h3>
+                            <span class="bg-primary text-white px-3 py-1 rounded-full text-sm">${product.category}</span>
                         </div>
                         
                         <div class="mb-6">
@@ -1104,7 +889,7 @@
             // Add event listeners
             document.querySelectorAll('.decrease-cart-item').forEach(button => {
                 button.addEventListener('click', () => {
-                    const id = parseInt(button.getAttribute('data-id'));
+                    const id = button.getAttribute('data-id');
                     const item = cart.find(item => item.id === id);
                     if (item && item.quantity > 1) {
                         updateCartItemQuantity(id, item.quantity - 1);
@@ -1114,7 +899,7 @@
             
             document.querySelectorAll('.increase-cart-item').forEach(button => {
                 button.addEventListener('click', () => {
-                    const id = parseInt(button.getAttribute('data-id'));
+                    const id = button.getAttribute('data-id');
                     const item = cart.find(item => item.id === id);
                     if (item) {
                         updateCartItemQuantity(id, item.quantity + 1);
@@ -1124,7 +909,7 @@
             
             document.querySelectorAll('.cart-item-quantity').forEach(input => {
                 input.addEventListener('change', () => {
-                    const id = parseInt(input.getAttribute('data-id'));
+                    const id = input.getAttribute('data-id');
                     const quantity = parseInt(input.value);
                     if (quantity > 0) {
                         updateCartItemQuantity(id, quantity);
@@ -1134,26 +919,29 @@
             
             document.querySelectorAll('.remove-cart-item').forEach(button => {
                 button.addEventListener('click', () => {
-                    const id = parseInt(button.getAttribute('data-id'));
+                    const id = button.getAttribute('data-id');
                     removeFromCart(id);
                 });
             });
             
             // WhatsApp checkout
-            
-document.getElementById('whatsapp-checkout').addEventListener('click', () => {
+            document.getElementById('whatsapp-checkout').addEventListener('click', () => {
     let message = "Olá! Gostaria de fazer um pedido:%0A%0A";
     
     cart.forEach(item => {
-        message += `- ${item.quantity}x ${item.name} (${item.price} MZN)%0A`;
+        let imageUrl = item.image.startsWith("http") 
+            ? item.image 
+            : `${window.location.origin}/${item.image}`;
+        message += `- ${item.quantity}x ${item.name} (${item.price} MZN)%0AImagem: ${imageUrl}%0A%0A`;
     });
     
-    message += `%0ATotal: ${total} MZN%0A`;
-    message += "%0APor favor, confirme a disponibilidade e formas de pagamento.";
+    let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    message += `Total: ${total} MZN%0A`;
+    message += "Por favor, confirme a disponibilidade e formas de pagamento.";
     
-    window.open(`https://wa.me/258865472940?text=${message}`, '_blank');
+    window.open(`https://wa.me/258865472940?text=${encodeURIComponent(message)}`, '_blank');
 });
-             }
+        }
 
         // Search function
         function searchProducts(query) {
@@ -1210,7 +998,7 @@ document.getElementById('whatsapp-checkout').addEventListener('click', () => {
                     document.querySelectorAll('.add-to-cart').forEach(button => {
                         button.addEventListener('click', (e) => {
                             e.preventDefault();
-                            const productId = parseInt(button.getAttribute('data-product-id'));
+                            const productId = button.getAttribute('data-product-id');
                             addToCart(productId);
                         });
                     });
@@ -1279,6 +1067,9 @@ document.getElementById('whatsapp-checkout').addEventListener('click', () => {
         function init() {
             // Update cart count
             updateCartCount();
+            
+            // Load products from Supabase
+            loadProducts();
             
             // Add event listeners
             window.addEventListener('hashchange', router);
