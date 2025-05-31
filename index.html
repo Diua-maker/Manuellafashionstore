@@ -1125,23 +1125,20 @@
             });
             
             // WhatsApp checkout
-           document.getElementById('whatsapp-checkout').addEventListener('click', () => {
+            
+document.getElementById('whatsapp-checkout').addEventListener('click', () => {
     let message = "Olá! Gostaria de fazer um pedido:%0A%0A";
     
     cart.forEach(item => {
-        let imageUrl = item.image.startsWith("http") 
-            ? item.image 
-            : `${window.location.origin}/${item.image}`;
-        message += `- ${item.quantity}x ${item.name} (${item.price} MZN)%0AImagem: ${imageUrl}%0A%0A`;
+        message += `- ${item.quantity}x ${item.name} (${item.price} MZN)%0A`;
     });
     
-    let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    message += `Total: ${total} MZN%0A`;
-    message += "Por favor, confirme a disponibilidade e formas de pagamento.";
+    message += `%0ATotal: ${total} MZN%0A`;
+    message += "%0APor favor, confirme a disponibilidade e formas de pagamento.";
     
-    window.open(`https://wa.me/258865472940?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/258865472940?text=${message}`, '_blank');
 });
-        }
+             }
 
         // Search function
         function searchProducts(query) {
